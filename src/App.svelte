@@ -1,5 +1,6 @@
 <script>
     import FeedbackList from "./components/FeedbackList.svelte";
+	import FeedbackStats from "./components/FeedbackStats.svelte";
 
     let feedback = [
         {
@@ -19,6 +20,9 @@
         }
     ];
 
+	$: count = feedback.length;
+	$: avg = feedback.reduce((acc, item) => acc+item.rating, 0)/feedback.length
+
 	const deleteFeedback = (e) => {
 		const itemId = e.detail;
 		feedback = feedback.filter((item) => item.id !== itemId)
@@ -26,6 +30,7 @@
 </script>
 
 <main class="container">
+	<h1>{avg}</h1>
     <FeedbackList {feedback} on:delete-feedback={deleteFeedback} />
 </main>
 
